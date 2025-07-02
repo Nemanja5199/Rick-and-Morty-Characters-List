@@ -1,4 +1,4 @@
-import { useSearch } from "./hook/useSearch";
+import { useSearch } from "./hooks/useSearch";
 
 function App() {
   const { searchTerm, setSearchTerm, characters, loading } = useSearch();
