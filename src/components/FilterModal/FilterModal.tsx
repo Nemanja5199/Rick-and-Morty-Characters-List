@@ -1,5 +1,5 @@
 import React from 'react';
-import { CHARACTER_STATUS, CHARACTER_GENDER, type CharacterStatus, type CharacterGender } from '../../types/character';
+import { CHARACTER_STATUS, CHARACTER_GENDER } from '../../types/character';
 
 interface FilterModalProps {
   isOpen: boolean;

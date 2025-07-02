@@ -1,7 +1,5 @@
 import type {
   Character,
-  CharacterStatus,
-  CharacterGender,
 } from "../types/character";
 
 import axios from "axios";
