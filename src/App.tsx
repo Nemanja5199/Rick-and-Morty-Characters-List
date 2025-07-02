@@ -1,4 +1,5 @@
 import { useSearch } from "./hooks/useSearch";
+import { CharacterCard } from "./components/Character";
 
 function App() {
   const { searchTerm, setSearchTerm, characters, loading } = useSearch();
@@ -23,19 +24,7 @@ function App() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {characters.map((character) => (
-          <div
-            key={character.id}
-            className="bg-white rounded-lg shadow-md p-4 max-w-sm mx-auto md:max-w-none"
-          >
-            <img
-              src={character.image}
-              alt={character.name}
-              className="w-full aspect-square object-cover rounded mb-3"
-            />
-            <h2 className="font-bold text-lg">{character.name}</h2>
-            <p className="text-gray-600">{character.status}</p>
-            <p className="text-gray-500 text-sm">{character.species}</p>
-          </div>
+          <CharacterCard key={character.id} character={character} />
         ))}
       </div>
 
