@@ -37,6 +37,7 @@ function App() {
     setTempSelectedStatus("");
     setTempSelectedGender("");
     setAppliedStatus("");
+    setAppliedGender("");
     setShowFilterModal(false);
   };
 
