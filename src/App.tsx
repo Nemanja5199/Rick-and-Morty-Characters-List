@@ -41,7 +41,10 @@ function App() {
   };
 
   const getActiveFilterCount = () => {
-    return appliedStatus ? 1 : 0;
+    let count = 0;
+    if (appliedStatus) count++;
+    if (appliedGender) count++;
+    return count;
   };
 
   return (
