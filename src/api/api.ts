@@ -37,13 +37,23 @@ class RickAndMortyAPI {
   async getCharacters(
     page: number = 1,
     searchName?: string,
+    status: string = "",
+    gender: string = ""
   ): Promise<CharacterApiResponse> {
     try {
       let url = `/character?page=${page}`;
 
-      if (searchName) {
+      if (searchName?.trim()) {
         url += `&name=${searchName}`;
       }
+
+      if(status.trim()){
+        url += `&status=${status}`;
+      }
+
+       if(gender.trim()){
+      url += `&gender=${gender}`;
+    }
       const response = api.get<CharacterApiResponse>(url);
       return (await response).data;
     } catch (error) {
