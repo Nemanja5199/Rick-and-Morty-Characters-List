@@ -1,8 +1,15 @@
 import { useSearch } from "./hooks/useSearch";
 import { CharacterCard } from "./components/Character";
+import { useInfiniteScroll } from "./hooks/useInfiniteScroll";
 
 function App() {
-  const { searchTerm, setSearchTerm, characters, loading } = useSearch();
+  const { searchTerm, setSearchTerm, characters, loading, loadMore, hasMore, loadingMore } = useSearch();
+
+  useInfiniteScroll(() => {
+  if (hasMore && !loading && !loadingMore) {
+    loadMore();
+  }
+});
 
   return (
     <div className="p-8">
