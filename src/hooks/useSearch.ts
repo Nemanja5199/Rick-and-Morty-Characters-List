@@ -20,24 +20,20 @@ export const useSearch = () => {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-
-  useEffect(() => {
-  setCharacters([]);
-  setPage(1);
-}, [debouncedSearchTerm]);
-
   useEffect(() => {
     const searchCharacters = async () => {
       try {
+        setCharacters([]);
+        setPage(1);
         setLoading(true);
-    
+
         if (!debouncedSearchTerm.trim()) {
-          const response = await rickandmortyapi.getCharacters(1);
+          const response = await rickandmortyapi.getCharacters(page);
           setCharacters(response.results);
           setHasMore(response.info.next !== null);
         } else {
           const response = await rickandmortyapi.getCharacters(
-            1,
+            page,
             debouncedSearchTerm,
           );
           setCharacters(response.results);
@@ -55,33 +51,35 @@ export const useSearch = () => {
     searchCharacters();
   }, [debouncedSearchTerm]);
 
-
   const loadMore = async () => {
-  if(loadingMore || !hasMore) return;
+    if (loadingMore || !hasMore) return;
 
-  try {
-    setLoadingMore(true);
-    const nextPage = page + 1;
-    const response = await rickandmortyapi.getCharacters(nextPage, debouncedSearchTerm);
+    try {
+      setLoadingMore(true);
+      const nextPage = page + 1;
+      const response = await rickandmortyapi.getCharacters(
+        nextPage,
+        debouncedSearchTerm,
+      );
 
-    // Filtriranje id-a 
-    setCharacters(prev => {
-      const newCharacters = response.results;
-      const existingIds = new Set(prev.map(char => char.id));
-      const uniqueNewCharacters = newCharacters.filter(char => !existingIds.has(char.id));
-      return [...prev, ...uniqueNewCharacters];
-    });
-    
-    setPage(nextPage);
-    setHasMore(response.info.next !== null);
+      // Filtriranje id-a
+      setCharacters((prev) => {
+        const newCharacters = response.results;
+        const existingIds = new Set(prev.map((char) => char.id));
+        const uniqueNewCharacters = newCharacters.filter(
+          (char) => !existingIds.has(char.id),
+        );
+        return [...prev, ...uniqueNewCharacters];
+      });
 
-  } catch (error) {
-    console.error("Load more failed:", error);
-  } finally {
-    setLoadingMore(false);
-  }
-}
-
+      setPage(nextPage);
+      setHasMore(response.info.next !== null);
+    } catch (error) {
+      console.error("Load more failed:", error);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   return {
     searchTerm,
@@ -90,6 +88,6 @@ export const useSearch = () => {
     loading,
     loadMore,
     hasMore,
-    loadingMore
+    loadingMore,
   };
 };

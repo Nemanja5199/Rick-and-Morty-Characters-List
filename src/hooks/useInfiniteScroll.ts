@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 interface UseInfiniteScrollOptions {
-  threshold?: number; 
-  enabled?: boolean; 
+  threshold?: number;
+  enabled?: boolean;
 }
 
 export const useInfiniteScroll = (
   callback: () => void,
-  options: UseInfiniteScrollOptions = {}
+  options: UseInfiniteScrollOptions = {},
 ) => {
   const { threshold = 200, enabled = true } = options;
 
@@ -19,17 +19,15 @@ export const useInfiniteScroll = (
       const windowHeight = window.innerHeight;
       const docHeight = document.documentElement.scrollHeight;
 
-      
       if (scrollTop + windowHeight >= docHeight - threshold) {
         callback();
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    
-   
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [callback, threshold, enabled]);
 };

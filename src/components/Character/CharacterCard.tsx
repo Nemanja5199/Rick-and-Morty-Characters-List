@@ -1,7 +1,5 @@
 import type { Character } from "../../types/character";
 
-
-
 export const CharacterCard = ({ character }: { character: Character }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-4 max-w-sm mx-auto md:max-w-none">
