@@ -1,5 +1,7 @@
 import type { Character, CharacterStatus, CharacterGender } from '../types/character';
 
+import axios from 'axios';
+
 export interface CharacterApiResponse {
     info: {
         count: number;
@@ -10,26 +12,24 @@ export interface CharacterApiResponse {
     results: Character[];
 }
 
-
 const BASE_URL = 'https://rickandmortyapi.com/api';
+
+const api = axios.create({
+
+    baseURL:BASE_URL,
+    timeout: 5000,
+
+});
 
 class RickAndMortyAPI   {
 
     async getCharacter(id : number): Promise<Character>{
 
-        const url = `${BASE_URL}/character/${id}`;
         try{
 
-            const response = await fetch(url);
+            const response = await api.get<Character>(`/character/${id}`);
+            return response.data;
 
-            if(!response.ok){
-
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data: Character = await response.json();
-            return data;
-
-            
         } catch(error){
             console.error('Error fetching characters:', error)
             throw error;
@@ -39,19 +39,9 @@ class RickAndMortyAPI   {
 
     async getCharacters(): Promise<CharacterApiResponse> {
 
-        const url = `${BASE_URL}/character`;
-
         try{
-
-            const response = await fetch(url);
-
-            if(!response.ok){
-
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data: CharacterApiResponse  = await response.json();
-            return data ;
+            const response = await api.get<CharacterApiResponse>(`/character`)
+            return response.data ;
 
         } catch (error){
             console.error('Error fetching characters:', error)
