@@ -1,6 +1,4 @@
-import type {
-  Character,
-} from "../types/character";
+import type { Character } from "../types/character";
 
 import axios from "axios";
 
@@ -36,7 +34,7 @@ class RickAndMortyAPI {
     page: number = 1,
     searchName?: string,
     status: string = "",
-    gender: string = ""
+    gender: string = "",
   ): Promise<CharacterApiResponse> {
     try {
       let url = `/character?page=${page}`;
@@ -45,13 +43,13 @@ class RickAndMortyAPI {
         url += `&name=${searchName}`;
       }
 
-      if(status.trim()){
+      if (status.trim()) {
         url += `&status=${status}`;
       }
 
-       if(gender.trim()){
-      url += `&gender=${gender}`;
-    }
+      if (gender.trim()) {
+        url += `&gender=${gender}`;
+      }
       const response = api.get<CharacterApiResponse>(url);
       return (await response).data;
     } catch (error) {

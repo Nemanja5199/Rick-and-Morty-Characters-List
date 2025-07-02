@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { rickandmortyapi } from "../api/api";
 import type { Character } from "../types/character";
 
-export const useSearch = (statusFilter: string = "", genderFilter: string = "") => {
+export const useSearch = (
+  statusFilter: string = "",
+  genderFilter: string = "",
+) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [page, setPage] = useState(1);
@@ -20,9 +23,6 @@ export const useSearch = (statusFilter: string = "", genderFilter: string = "") 
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-
-
-
   useEffect(() => {
     const searchCharacters = async () => {
       try {
@@ -31,7 +31,12 @@ export const useSearch = (statusFilter: string = "", genderFilter: string = "") 
         setLoading(true);
 
         if (!debouncedSearchTerm.trim()) {
-          const response = await rickandmortyapi.getCharacters(page,"",statusFilter,genderFilter);
+          const response = await rickandmortyapi.getCharacters(
+            page,
+            "",
+            statusFilter,
+            genderFilter,
+          );
           setCharacters(response.results);
           setHasMore(response.info.next !== null);
         } else {
@@ -39,7 +44,7 @@ export const useSearch = (statusFilter: string = "", genderFilter: string = "") 
             page,
             debouncedSearchTerm,
             statusFilter,
-            genderFilter
+            genderFilter,
           );
           setCharacters(response.results);
           setHasMore(response.info.next !== null);
@@ -54,7 +59,7 @@ export const useSearch = (statusFilter: string = "", genderFilter: string = "") 
     };
 
     searchCharacters();
-  }, [debouncedSearchTerm, statusFilter,genderFilter]);
+  }, [debouncedSearchTerm, statusFilter, genderFilter]);
 
   const loadMore = async () => {
     if (loadingMore || !hasMore) return;
@@ -66,7 +71,7 @@ export const useSearch = (statusFilter: string = "", genderFilter: string = "") 
         nextPage,
         debouncedSearchTerm,
         statusFilter,
-        genderFilter
+        genderFilter,
       );
 
       // Filtriranje id-a
