@@ -10,7 +10,7 @@ A React application that displays characters from the Rick and Morty universe us
 ![Rick and morty](https://github.com/user-attachments/assets/d4c2f4a4-bcbf-4c38-8bf4-e64c815a04f3)
 
 ## 🛠️ Built With
-- React 19
+- React 
 - TypeScript
 - Tailwind CSS
 - Vite
